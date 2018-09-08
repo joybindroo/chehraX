@@ -34,18 +34,18 @@ def url_to_image(url):
 	# return the image
     return image
 
-def run_face_swap(from=from_image_path, to=to_image_path, output_path=output_path):
+def run_face_swap(input_one=from_image_path, input_two=to_image_path, output_result=output_path):
     """Switch faces between two input images using dlib and OpenCV."""
     # Credits to https://github.com/spmallick/
     try:
-        if len(find_url(from)) > 0:
-            img1 = url_to_image(from)
+        if len(find_url(input_one)) > 0:
+            img1 = url_to_image(input_one)
         else:
-            img1 = cv2.imread(from)
-        if len(find_url(to)) > 0:
-            img2 = url_to_image(to)
+            img1 = cv2.imread(input_one)
+        if len(find_url(input_two)) > 0:
+            img2 = url_to_image(input_two)
         else:
-            img2 = cv2.imread(to)
+            img2 = cv2.imread(input_two)
         img1Warped = np.copy(img2)
         # Initialize the dlib facial landmark detector
         detector = dlib.get_frontal_face_detector()
@@ -83,7 +83,7 @@ def run_face_swap(from=from_image_path, to=to_image_path, output_path=output_pat
         # Seamless Cloning using OpenCV
         output = cv2.seamlessClone(np.uint8(img1Warped), img2, mask, center, cv2.NORMAL_CLONE)
         # Write output image
-        cv2.imwrite(output_path, output)
+        cv2.imwrite(output_result, output)
     except KeyError:
         raise KeyError('there was an error')
 
