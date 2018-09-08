@@ -76,6 +76,18 @@ def run_face_swap(from_image, to_image, output_filename):
         # If no Delaunay Triangles were found, quit
         if len(dt) == 0:
             quit()
+        # Continue triangulation
+        tris1 = []
+        tris2 = []
+        for i in range(0, len(dt)):
+            tri1 = []
+            tri2 = []
+            for j in range(0, 3):
+                tri1.append(hull1[dt[i][j]])
+                tri2.append(hull2[dt[i][j]])
+
+            tris1.append(tri1)
+            tris2.append(tri2)
         # Apply affine transformation to Delaunay triangles
         for i in range(0, len(tris1)):
             fbc.warpTriangle(img1, img1Warped, tris1[i], tris2[i])
