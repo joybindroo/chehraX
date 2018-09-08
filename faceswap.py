@@ -10,7 +10,7 @@ import urllib
 @click.command(help='Script to swap faces between two images')
 @click.argument('from_image_path', default='image1.jpg', type=click.Path(exists=True))
 @click.argument('to_image_path', default='image2.jpg', type=click.Path(exists=True))
-@click.argument('output', default='result.jpg', type=click.Path(exists=True))
+@click.argument('output_path', default='result.jpg', type=click.Path(exists=True))
 
 #@click.option('--from_image_path', default='image1.jpg', help='Path to first input image (where you extract the face)')
 #@click.option('--to_image_path', default='image2.jpg', help='Path to second input image (where you switch the face)')
@@ -34,18 +34,18 @@ def url_to_image(url):
 	# return the image
     return image
 
-def run_face_swap(from_image_path, to_image_path, output_path):
+def run_face_swap(from=from_image_path, to=to_image_path, output_path=output_path):
     """Switch faces between two input images using dlib and OpenCV."""
     # Credits to https://github.com/spmallick/
     try:
-        if len(find_url(from_image_path)) > 0:
-            img1 = url_to_image(from_image_path)
+        if len(find_url(from)) > 0:
+            img1 = url_to_image(from)
         else:
-            img1 = cv2.imread(from_image_path)
-        if len(find_url(to_image_path)) > 0:
-            img2 = url_to_image(to_image_path)
+            img1 = cv2.imread(from)
+        if len(find_url(to)) > 0:
+            img2 = url_to_image(to)
         else:
-            img2 = cv2.imread(to_image_path)
+            img2 = cv2.imread(to)
         img1Warped = np.copy(img2)
         # Initialize the dlib facial landmark detector
         detector = dlib.get_frontal_face_detector()
