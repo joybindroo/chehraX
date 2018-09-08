@@ -24,7 +24,7 @@ def url_to_image(url):
     # source: https://www.pyimagesearch.com/2015/03/02/convert-url-to-image-with-python-and-opencv/
     # download the image, convert it to a NumPy array, and then read
 	# it into OpenCV format
-	resp = urllib.urlopen(url)
+    resp = urllib.urlopen(url)
 	image = np.asarray(bytearray(resp.read()), dtype="uint8")
 	image = cv2.imdecode(image, cv2.IMREAD_COLOR)
 	# return the image
@@ -32,7 +32,6 @@ def url_to_image(url):
 
 def run_face_swap(from_image_path, to_image_path, output_path):
     """Switch faces between two input images using dlib and OpenCV."""
-
     # Credits to https://github.com/spmallick/
     try:
         if len(find_url(from_image_path)) > 0:
