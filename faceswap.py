@@ -5,7 +5,11 @@ import numpy as np
 import faceBlendCommon as fbc
 import matplotlib.pyplot as plt
 import re
-import urllib
+
+if sys.version_info[0] == 3:
+    from urllib.request import urlopen
+else:
+    from urllib import urlopen
 
 def create_arg_parser():
     """"Creates and returns the ArgumentParser object."""
@@ -27,7 +31,7 @@ def url_to_image(url):
     # source: https://www.pyimagesearch.com/2015/03/02/convert-url-to-image-with-python-and-opencv/
     # download the image, convert it to a NumPy array, and then read
 	# it into OpenCV format
-    resp = urllib.urlopen(url)
+    resp = urlopen(url)
     image = np.asarray(bytearray(resp.read()), dtype="uint8")
     image = cv2.imdecode(image, cv2.IMREAD_COLOR)
 	# return the image
