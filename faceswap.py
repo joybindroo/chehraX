@@ -8,9 +8,9 @@ import re
 import urllib
 
 @click.command(help='Script to swap faces between two images')
-@click.option('from_image_path', '--from', default='image1.jpg', help='Path to first input image (where you extract the face)')
-@click.option('to_image_path', '--to', default='image2.jpg', help='Path to second input image (where you switch the face)')
-@click.option('output_path', '--output', default='result.jpg', help='Path to output image')
+@click.option('--from_image_path', default='image1.jpg', help='Path to first input image (where you extract the face)')
+@click.option('--to_image_path', default='image2.jpg', help='Path to second input image (where you switch the face)')
+@click.option('--output_path', default='result.jpg', help='Path to output image')
 
 def find_url(string):
     """Find if a string contains an URL"""
