@@ -9,12 +9,11 @@ import urllib
 
 def create_arg_parser():
     """"Creates and returns the ArgumentParser object."""
-
     parser = argparse.ArgumentParser(description='Script to swap faces between two images.')
     parser.add_argument('from_image', help='Path to first image where you will extract the face.')
     parser.add_argument('to_image', help='Path to second image where you will swap the existing face')
     parser.add_argument('output_filename', help='Path to output image.')
-return parser
+    return parser
 
 def find_url(string):
     """Find if a string contains an URL"""
