@@ -1,20 +1,20 @@
 # import modules
-import sys, cv2, dlib, time
-import click
+import sys, os, cv2, dlib, time
+import argparse
 import numpy as np
 import faceBlendCommon as fbc
 import matplotlib.pyplot as plt
 import re
 import urllib
 
-@click.command(help='Script to swap faces between two images')
-@click.argument('from_image_path', default='image1.jpg', type=click.Path(exists=True))
-@click.argument('to_image_path', default='image2.jpg', type=click.Path(exists=True))
-@click.argument('output_path', default='result.jpg', type=click.Path(exists=True))
+def create_arg_parser():
+    """"Creates and returns the ArgumentParser object."""
 
-#@click.option('--from_image_path', default='image1.jpg', help='Path to first input image (where you extract the face)')
-#@click.option('--to_image_path', default='image2.jpg', help='Path to second input image (where you switch the face)')
-#@click.option('--output_path', default='result.jpg', help='Path to output image')
+    parser = argparse.ArgumentParser(description='Script to swap faces between two images.')
+    parser.add_argument('from_image', help='Path to first image where you will extract the face.')
+    parser.add_argument('to_image', help='Path to second image where you will swap the existing face')
+    parser.add_argument('output_filename', help='Path to output image.')
+return parser
 
 def find_url(string):
     """Find if a string contains an URL"""
@@ -34,18 +34,18 @@ def url_to_image(url):
 	# return the image
     return image
 
-def run_face_swap(input_one=from_image_path, input_two=to_image_path, output_result=output_path):
+def run_face_swap(from_image, to_image, output_filename):
     """Switch faces between two input images using dlib and OpenCV."""
     # Credits to https://github.com/spmallick/
     try:
-        if len(find_url(input_one)) > 0:
-            img1 = url_to_image(input_one)
+        if len(find_url(from_image)) > 0:
+            img1 = url_to_image(from_image)
         else:
-            img1 = cv2.imread(input_one)
-        if len(find_url(input_two)) > 0:
-            img2 = url_to_image(input_two)
+            img1 = cv2.imread(from_image)
+        if len(find_url(to_image)) > 0:
+            img2 = url_to_image(to_image)
         else:
-            img2 = cv2.imread(input_two)
+            img2 = cv2.imread(to_image)
         img1Warped = np.copy(img2)
         # Initialize the dlib facial landmark detector
         detector = dlib.get_frontal_face_detector()
@@ -83,9 +83,11 @@ def run_face_swap(input_one=from_image_path, input_two=to_image_path, output_res
         # Seamless Cloning using OpenCV
         output = cv2.seamlessClone(np.uint8(img1Warped), img2, mask, center, cv2.NORMAL_CLONE)
         # Write output image
-        cv2.imwrite(output_result, output)
+        cv2.imwrite(output_filename, output)
     except KeyError:
         raise KeyError('there was an error')
 
-if __name__ == '__main__':
-    run_face_swap()
+if __name__ == "__main__":
+    arg_parser = create_arg_parser()
+    parsed_args = arg_parser.parse_args(sys.argv[1:])
+    run_face_swap(parsed_args.from_image, parsed_args.to_image, parsed_args.output_filename)
