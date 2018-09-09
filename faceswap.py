@@ -87,9 +87,9 @@ def run_face_swap(from_image, to_image, output_filename):
     	# Apply affine transformation to Delaunay triangles
     	for i in range(0, len(tris1)):
             fbc.warpTriangle(img1, img1Warped, tris1[i], tris2[i])
-    	# Seamless Cloning using OpenCV
+        # Seamless Cloning using OpenCV
         output = cv2.seamlessClone(np.uint8(img1Warped), img2, mask, center, cv2.NORMAL_CLONE)
-    	# Write output image
+        # Write output image
         cv2.imwrite(output_filename, output)
     except Exception as e:
         print(e.message, e.args)
