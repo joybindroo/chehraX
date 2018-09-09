@@ -31,7 +31,7 @@ def read_url_or_local_image(path, im_format = 'cv2'):
       pil_im = Image.open(path)
   
   if im_format is 'cv2':
-    image = cv2.cvtColor(numpy.array(pil_image), cv2.COLOR_RGB2BGR)
+    image = cv2.cvtColor(np.array(pil_im), cv2.COLOR_RGB2BGR)
     return image
   else:
     return pil_im
