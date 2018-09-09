@@ -4,12 +4,7 @@ import argparse
 import numpy as np
 import faceBlendCommon as fbc
 import matplotlib.pyplot as plt
-import re
-
-if sys.version_info[0] == 3:
-    from urllib.request import urlopen
-else:
-    from urllib import urlopen
+import re, io, requests
 
 def create_arg_parser():
     """"Creates and returns the ArgumentParser object."""
@@ -24,31 +19,29 @@ def find_url(string):
     # findall() has been used
     # with valid conditions for urls in string
     url = re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\), ]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', string)
-    return url
+    if len(url) > 0:
+      return True
 
-def url_to_image(url):
-    """Convert URL to OpenCV Image"""
-    # source: https://www.pyimagesearch.com/2015/03/02/convert-url-to-image-with-python-and-opencv/
-    # download the image, convert it to a NumPy array, and then read
-	# it into OpenCV format
-    resp = urlopen(url)
-    image = np.asarray(bytearray(resp.read()), dtype="uint8")
-    image = cv2.imdecode(image, cv2.IMREAD_COLOR)
-	# return the image
+def read_url_or_local_image(path, im_format = 'cv2'):
+  """Convert URL to OpenCV/PIL Image"""
+  if find_url(path):
+      r = requests.get(path)
+      pil_im = Image.open(io.BytesIO(r.content))
+  else:
+      pil_im = Image.open(path)
+  
+  if im_format is 'cv2':
+    image = cv2.cvtColor(numpy.array(pil_image), cv2.COLOR_RGB2BGR)
     return image
+  else:
+    return pil_im
 
 def run_face_swap(from_image, to_image, output_filename):
     """Switch faces between two input images using dlib and OpenCV."""
     # Credits to https://github.com/spmallick/
     try:
-        if len(find_url(from_image)) > 0:
-            img1 = url_to_image(from_image)
-        else:
-            img1 = cv2.imread(from_image)
-        if len(find_url(to_image)) > 0:
-            img2 = url_to_image(to_image)
-        else:
-            img2 = cv2.imread(to_image)
+        img1 = read_url_or_local_image(from_image)
+	img2 = read_url_or_local_image(to_image)
         img1Warped = np.copy(img2)
         # Initialize the dlib facial landmark detector
         detector = dlib.get_frontal_face_detector()
