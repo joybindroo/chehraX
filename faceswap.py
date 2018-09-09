@@ -40,8 +40,8 @@ def run_face_swap(from_image, to_image, output_filename):
     """Switch faces between two input images using dlib and OpenCV."""
     # Credits to https://github.com/spmallick/
     try:
-        img1 = read_url_or_local_image(from_image)
-	img2 = read_url_or_local_image(to_image)
+        img1 = read_url_or_local_image(from_image, im_format = 'cv2')
+	img2 = read_url_or_local_image(to_image, im_format = 'cv2')
         img1Warped = np.copy(img2)
         # Initialize the dlib facial landmark detector
         detector = dlib.get_frontal_face_detector()
@@ -92,8 +92,8 @@ def run_face_swap(from_image, to_image, output_filename):
         output = cv2.seamlessClone(np.uint8(img1Warped), img2, mask, center, cv2.NORMAL_CLONE)
         # Write output image
         cv2.imwrite(output_filename, output)
-    except KeyError:
-        raise KeyError('there was an error')
+    except Exception as e:
+        print(e.message, e.args)
 
 if __name__ == "__main__":
     arg_parser = create_arg_parser()
