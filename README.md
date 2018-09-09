@@ -8,6 +8,14 @@ This script supports Python 2.7 and 3.6.
 ````
 $ git clone https://github.com/nicolasmetallo/eameo-faceswap-generator.git
 ````
+## Install Dlib
+Run the following to install Dlib in Google Colaboratory.
+````
+!apt update
+!apt install -y cmake
+!pip install dlib
+````
+Click here for [MacOS/Ubuntu](https://www.pyimagesearch.com/2018/01/22/install-dlib-easy-complete-guide) instructions or [Windows](https://www.learnopencv.com/install-opencv-3-and-dlib-on-windows-python-only). 
 ## Pre-requisites
 Run the following to install required modules
 ````
