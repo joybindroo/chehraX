@@ -1,6 +1,6 @@
 # eameo-faceswap-generator
 Inspired by the amazing work done daily by [Eameo](https://twitter.com/EameoOk), I put together this simple script that
-switch faces between two input images. You can run the step-by-step ipynb in [Google Colab](https://colab.research.google.com)
+switch faces between two input images. You can run the step-by-step ipynb in [Google Colab](https://colab.research.google.com/github/nicolasmetallo/eameo-faceswap-generator/blob/master/face-swap-step-by-step.ipynb)
 or run ```python faceswap.py``` directly.
 # Installation
 This script supports Python 2.7 and 3.6.
