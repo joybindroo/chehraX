@@ -21,6 +21,6 @@ This script requires the user to input three file paths which can be local paths
 
 Now let's take two input images and set ```result.jpg``` as the output file.
 ```
-$ python faceswap.py input1.jpg input2.jpg result.jpg
+$ python faceswap.py image1.jpg image2.jpg result.jpg
 ```
-<img src="https://i.imgur.com/Z4oac7a.png">
+<img src="https://i.imgur.com/Wkya5C0.png">
