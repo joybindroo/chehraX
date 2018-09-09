@@ -80,20 +80,19 @@ def run_face_swap(from_image, to_image, output_filename):
     	    tri1 = []
     	    tri2 = []
     	    for j in range(0, 3):
-        		tri1.append(hull1[dt[i][j]])
-        		tri2.append(hull2[dt[i][j]])
-
-        	    tris1.append(tri1)
-        	    tris2.append(tri2)
+                tri1.append(hull1[dt[i][j]])
+                tri2.append(hull2[dt[i][j]])
+                tris1.append(tri1)
+                tris2.append(tri2)
     	# Apply affine transformation to Delaunay triangles
     	for i in range(0, len(tris1)):
-    	    fbc.warpTriangle(img1, img1Warped, tris1[i], tris2[i])
+            fbc.warpTriangle(img1, img1Warped, tris1[i], tris2[i])
     	# Seamless Cloning using OpenCV
-    	output = cv2.seamlessClone(np.uint8(img1Warped), img2, mask, center, cv2.NORMAL_CLONE)
+        output = cv2.seamlessClone(np.uint8(img1Warped), img2, mask, center, cv2.NORMAL_CLONE)
     	# Write output image
-    	cv2.imwrite(output_filename, output)
+        cv2.imwrite(output_filename, output)
     except Exception as e:
-    	print(e.message, e.args)
+        print(e.message, e.args)
 
 if __name__ == "__main__":
     arg_parser = create_arg_parser()
